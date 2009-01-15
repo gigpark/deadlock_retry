@@ -36,7 +36,7 @@ module DeadlockRetry
       "Lock wait timeout exceeded"
     ]
 
-    MAXIMUM_RETRIES_ON_DEADLOCK = 3
+    MAXIMUM_RETRIES_ON_DEADLOCK = 5
 
     def transaction_with_deadlock_handling(*objects, &block)
       retry_count = 0
@@ -48,7 +48,7 @@ module DeadlockRetry
         if DEADLOCK_ERROR_MESSAGES.any? { |msg| error.message =~ /#{Regexp.escape(msg)}/ }
           raise if retry_count >= MAXIMUM_RETRIES_ON_DEADLOCK
           retry_count += 1
-          logger.info "Deadlock detected on retry #{retry_count}, restarting transaction"
+          logger.warn "Deadlock detected on retry #{retry_count}, restarting transaction"
           retry
         else
           raise
