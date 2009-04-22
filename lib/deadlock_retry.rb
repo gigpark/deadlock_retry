@@ -32,8 +32,7 @@ module DeadlockRetry
 
   module ClassMethods
     DEADLOCK_ERROR_MESSAGES = [
-      "Deadlock found when trying to get lock",
-      "Lock wait timeout exceeded"
+      "Deadlock found when trying to get lock"
     ]
 
     MAXIMUM_RETRIES_ON_DEADLOCK = 5
